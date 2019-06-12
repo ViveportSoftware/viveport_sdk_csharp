@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Viveport</RootNamespace>
+    <AssemblyName>Viveport</AssemblyName>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <IntermediateOutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\obj</IntermediateOutputPath>
+    <OutputPath>..\..\temp\$(Configuration)\$(AssemblyName)\bin</OutputPath>
+    <DocumentationFile>..\..\temp\$(Configuration)\$(AssemblyName)\bin\$(AssemblyName).xml</DocumentationFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>6</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <Authors>HTC</Authors>
+    <PackageDescription>HTC VIVEPORT SDK for .NET Platform</PackageDescription>
+    <PackageProjectUrl>https://github.com/ViveportSoftware/viveport_sdk_csharp/</PackageProjectUrl>
+    <PackageTags>htc;viveport;sdk;csharp</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="viveport_api.v141" Version="1.7.1.1" ExcludeAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\Win32\viveport_api.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>x86\viveport_api.dll</Link>
+      <PackagePath>build\x86\</PackagePath>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\Win32\viveport_api.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>x86\viveport_api.pdb</Link>
+      <PackagePath>build\x86\</PackagePath>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\x64\viveport_api64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>x64\viveport_api64.dll</Link>
+      <PackagePath>build\x64\</PackagePath>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\x64\viveport_api64.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>x64\viveport_api64.pdb</Link>
+      <PackagePath>build\x64\</PackagePath>
+    </Content>
+    <Content Include="$(AssemblyName).targets">
+      <PackagePath>build/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+</Project>
