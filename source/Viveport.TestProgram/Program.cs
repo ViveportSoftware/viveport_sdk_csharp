@@ -71,6 +71,14 @@ namespace Viveport.TestProgram
         static void OnDlcFinished()
         {
             TestLogger.Debug(null, "DLC testing finished...");
+            var testSubscription = TestSubscription.GetInstance();
+            testSubscription.SetCallback(OnSubscriptionFinished);
+            testSubscription.StartTest();
+        }
+
+        static void OnSubscriptionFinished()
+        {
+            TestLogger.Debug(null, "Subscription testing finished...");
             TestLogger.Debug(null, "Please press enter key to leave...");
         }
     }

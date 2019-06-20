@@ -481,5 +481,25 @@ namespace Viveport.Internal
         [DllImport("viveport_api64", EntryPoint = "IViveportDlc_GetIsAvailable", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool GetIsAvailable_64(int index, StringBuilder appId, out bool isAvailable);
     }
+
+    internal partial class Subscription
+    {
+        static Subscription()
+        {
+            Api.LoadLibraryManually("viveport_api");
+        }
+
+        [DllImport("viveport_api", EntryPoint = "IViveportDlc_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IsReady(StatusCallback IsReadyCallback);
+
+        [DllImport("viveport_api64", EntryPoint = "IViveportDlc_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IsReady_64(StatusCallback IsReadyCallback);
+
+        [DllImport("viveport_api", EntryPoint = "IViveportDlc_IsSubscribed", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IsSubscribed();
+
+        [DllImport("viveport_api64", EntryPoint = "IViveportDlc_IsSubscribed", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IsSubscribed_64();
+    }
 #endif
 }
