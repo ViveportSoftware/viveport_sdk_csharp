@@ -2364,6 +2364,46 @@ namespace Viveport
 #endif
     }
 
+    public partial class Subscription
+    {
+#if !UNITY_ANDROID
+        public static int IsReady(StatusCallback callback)
+        {
+            if (callback == null)
+            {
+                throw new InvalidOperationException("callback == null");
+            }
+
+            var internalCallback = new Internal.StatusCallback(callback);
+            if (Environment.Is64BitProcess)
+            {
+                return Internal.Subscription.IsReady_64(internalCallback);
+            }
+            else
+            {
+                return Internal.Subscription.IsReady(internalCallback);
+            }
+        }
+
+        public static bool IsSubscribed(out bool isViveportClientNeedToUpdate)
+        {
+            int errorCode = Environment.Is64BitProcess ? Internal.Subscription.IsSubscribed_64() : Internal.Subscription.IsSubscribed();
+            if (errorCode == -1)
+            {
+                isViveportClientNeedToUpdate = true;
+                return false;
+            }
+            else if (errorCode == 0)
+            {
+                isViveportClientNeedToUpdate = false;
+                return true;
+            }
+            isViveportClientNeedToUpdate = false;
+            return false;
+        }
+#endif
+    }
+
     namespace Arcade
     {
         partial class Session
