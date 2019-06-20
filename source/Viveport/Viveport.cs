@@ -2377,11 +2377,11 @@ namespace Viveport
             var internalCallback = new Internal.StatusCallback(callback);
             if (Environment.Is64BitProcess)
             {
-                return Internal.Dlc.IsReady_64(internalCallback);
+                return Internal.Subscription.IsReady_64(internalCallback);
             }
             else
             {
-                return Internal.Dlc.IsReady(internalCallback);
+                return Internal.Subscription.IsReady(internalCallback);
             }
         }
 
