@@ -33,26 +33,42 @@
             }
         }
 
-        void TestIsReadyCallback(int errorCode)
+        void TestIsReadyCallback(int errorCode, string message)
         {
             if (errorCode == SUCCESS)
             {
                 TestLogger.Success("IsReady", "IsReady success.");
 
-                var isViveportClientNeedToUpdate = false;
-                var isSubscribed = Subscription.IsSubscribed(out isViveportClientNeedToUpdate);
-                if (isViveportClientNeedToUpdate)
+                var userStatus = Subscription.GetUserStatus();
+                var isWindowsSubscriber = userStatus.Platforms.Contains(SubscriptionStatus.Platform.Windows) ? "true" : "false";
+                var isAndroidSubscriber = userStatus.Platforms.Contains(SubscriptionStatus.Platform.Android) ? "true" : "false";
+                var transactionType = "";
+                switch (userStatus.Type)
                 {
-                    TestLogger.Warnning("System", "Your VIVEPORT CLIENT needs to update...");
+                    case SubscriptionStatus.TransactionType.Unknown:
+                        transactionType = "Unknown";
+                        break;
+                    case SubscriptionStatus.TransactionType.Paid:
+                        transactionType = "Paid";
+                        break;
+                    case SubscriptionStatus.TransactionType.Redeem:
+                        transactionType = "Redeem";
+                        break;
+                    case SubscriptionStatus.TransactionType.FreeTrial:
+                        transactionType = "FreeTrial";
+                        break;
+                    default:
+                        transactionType = "Unknown";
+                        break;
                 }
-                else
-                {
-                    TestLogger.Success("IsSubscribed", isSubscribed ? "Content subscribed by user." : "This user didn't subscribe this content.");
-                }
+
+                TestLogger.Success("GetUserStatus", string.Format("User is a Windows subscriber: {0}", isWindowsSubscriber));
+                TestLogger.Success("GetUserStatus", string.Format("User is a Android subscriber: {0}", isAndroidSubscriber));
+                TestLogger.Success("GetUserStatus", string.Format("Transaction Type: {0}", transactionType));
             }
             else
             {
-                TestLogger.Error("IsReady", string.Format("IsReady failure. Error Code: {0}", errorCode));
+                TestLogger.Error("IsReady", string.Format("IsReady failure. Error Code: {0}, Error Message: {1}", errorCode, message));
             }
 
             Api.Shutdown(TestShutdownCallback);
