@@ -23,28 +23,28 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="viveport_api.v141" Version="1.7.1.1" ExcludeAssets="all" />
+    <PackageReference Include="viveport_api.v141" Version="1.7.1.2" ExcludeAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\generated\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\Win32\viveport_api.dll">
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.2\lib\Win32\viveport_api.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>x86\viveport_api.dll</Link>
       <PackagePath>build\x86\</PackagePath>
     </Content>
-    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\Win32\viveport_api.pdb">
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.2\lib\Win32\viveport_api.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>x86\viveport_api.pdb</Link>
       <PackagePath>build\x86\</PackagePath>
     </Content>
-    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\x64\viveport_api64.dll">
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.2\lib\x64\viveport_api64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>x64\viveport_api64.dll</Link>
       <PackagePath>build\x64\</PackagePath>
     </Content>
-    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.1\lib\x64\viveport_api64.pdb">
+    <Content Include="$(NuGetPackageRoot)\viveport_api.v141\1.7.1.2\lib\x64\viveport_api64.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>x64\viveport_api64.pdb</Link>
       <PackagePath>build\x64\</PackagePath>
