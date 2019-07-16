@@ -51,6 +51,14 @@ namespace Viveport.Internal
         k_ELeaderboardUploadScoreMethodForceUpdate = 2, // Leaderboard will always replace score with specified
     };
 
+    internal enum ESubscriptionTransactionType
+    {
+        UNKNOWN = 0,
+        PAID = 1,
+        REDEEM = 2,
+        FREEE_TRIAL = 3
+    };
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     internal struct LeaderboardEntry_t
     {
@@ -489,17 +497,29 @@ namespace Viveport.Internal
             Api.LoadLibraryManually("viveport_api");
         }
 
-        [DllImport("viveport_api", EntryPoint = "IViveportDlc_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IsReady(StatusCallback IsReadyCallback);
+        [DllImport("viveport_api", EntryPoint = "IViveportSubscription_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void IsReady(StatusCallback2 IsReadyCallback);
 
-        [DllImport("viveport_api64", EntryPoint = "IViveportDlc_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IsReady_64(StatusCallback IsReadyCallback);
+        [DllImport("viveport_api64", EntryPoint = "IViveportSubscription_IsReady", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void IsReady_64(StatusCallback2 IsReadyCallback);
 
-        [DllImport("viveport_api", EntryPoint = "IViveportDlc_IsSubscribed", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IsSubscribed();
+        [DllImport("viveport_api", EntryPoint = "IViveportSubscription_IsWindowsSubscriber", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool IsWindowsSubscriber();
 
-        [DllImport("viveport_api64", EntryPoint = "IViveportDlc_IsSubscribed", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IsSubscribed_64();
+        [DllImport("viveport_api64", EntryPoint = "IViveportSubscription_IsWindowsSubscriber", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool IsWindowsSubscriber_64();
+
+        [DllImport("viveport_api", EntryPoint = "IViveportSubscription_IsAndroidSubscriber", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool IsAndroidSubscriber();
+
+        [DllImport("viveport_api64", EntryPoint = "IViveportSubscription_IsAndroidSubscriber", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool IsAndroidSubscriber_64();
+
+        [DllImport("viveport_api", EntryPoint = "IViveportSubscription_GetTransactionType", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ESubscriptionTransactionType GetTransactionType();
+
+        [DllImport("viveport_api64", EntryPoint = "IViveportSubscription_GetTransactionType", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ESubscriptionTransactionType GetTransactionType_64();
     }
 #endif
 }

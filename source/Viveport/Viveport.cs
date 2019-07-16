@@ -89,6 +89,26 @@ namespace Viveport
         public string UserName { get; set; }
     }
 
+    public class SubscriptionStatus
+    {
+        public enum Platform
+        {
+            Windows,
+            Android
+        }
+
+        public enum TransactionType
+        {
+            Unknown,
+            Paid,
+            Redeem,
+            FreeTrial
+        }
+
+        public List<Platform> Platforms { get; set; } = new List<Platform>();
+        public TransactionType Type { get; set; } = TransactionType.Unknown;
+    }
+
     public partial class Api
     {
         internal static readonly List<Internal.GetLicenseCallback> InternalGetLicenseCallbacks = new List<Internal.GetLicenseCallback>();
@@ -2367,39 +2387,91 @@ namespace Viveport
     public partial class Subscription
     {
 #if !UNITY_ANDROID
-        public static int IsReady(StatusCallback callback)
+
+        public static void IsReady(StatusCallback2 callback)
         {
             if (callback == null)
             {
                 throw new InvalidOperationException("callback == null");
             }
 
-            var internalCallback = new Internal.StatusCallback(callback);
+            var internalCallback = new Internal.StatusCallback2(callback);            
             if (Environment.Is64BitProcess)
             {
-                return Internal.Subscription.IsReady_64(internalCallback);
+                Internal.Subscription.IsReady_64(internalCallback);
             }
             else
             {
-                return Internal.Subscription.IsReady(internalCallback);
+                Internal.Subscription.IsReady(internalCallback);
             }
         }
 
-        public static bool IsSubscribed(out bool isViveportClientNeedToUpdate)
+        public static SubscriptionStatus GetUserStatus()
         {
-            int errorCode = Environment.Is64BitProcess ? Internal.Subscription.IsSubscribed_64() : Internal.Subscription.IsSubscribed();
-            if (errorCode == -1)
+            var status = new SubscriptionStatus();
+
+            if (Environment.Is64BitProcess)
             {
-                isViveportClientNeedToUpdate = true;
-                return false;
+                if (Internal.Subscription.IsWindowsSubscriber_64())
+                {
+                    status.Platforms.Add(SubscriptionStatus.Platform.Windows);
+                }
+                if (Internal.Subscription.IsAndroidSubscriber_64())
+                {
+                    status.Platforms.Add(SubscriptionStatus.Platform.Android);
+                }
+
+                switch (Internal.Subscription.GetTransactionType_64())
+                {
+                    case Internal.ESubscriptionTransactionType.UNKNOWN:
+                        status.Type = SubscriptionStatus.TransactionType.Unknown;
+                        break;
+                    case Internal.ESubscriptionTransactionType.PAID:
+                        status.Type = SubscriptionStatus.TransactionType.Paid;
+                        break;
+                    case Internal.ESubscriptionTransactionType.REDEEM:
+                        status.Type = SubscriptionStatus.TransactionType.Redeem;
+                        break;
+                    case Internal.ESubscriptionTransactionType.FREEE_TRIAL:
+                        status.Type = SubscriptionStatus.TransactionType.FreeTrial;
+                        break;
+                    default:
+                        status.Type = SubscriptionStatus.TransactionType.Unknown;
+                        break;
+                }
             }
-            else if (errorCode == 0)
+            else
             {
-                isViveportClientNeedToUpdate = false;
-                return true;
+                if (Internal.Subscription.IsWindowsSubscriber())
+                {
+                    status.Platforms.Add(SubscriptionStatus.Platform.Windows);
+                }
+                if (Internal.Subscription.IsAndroidSubscriber())
+                {
+                    status.Platforms.Add(SubscriptionStatus.Platform.Android);
+                }
+
+                switch (Internal.Subscription.GetTransactionType())
+                {
+                    case Internal.ESubscriptionTransactionType.UNKNOWN:
+                        status.Type = SubscriptionStatus.TransactionType.Unknown;
+                        break;
+                    case Internal.ESubscriptionTransactionType.PAID:
+                        status.Type = SubscriptionStatus.TransactionType.Paid;
+                        break;
+                    case Internal.ESubscriptionTransactionType.REDEEM:
+                        status.Type = SubscriptionStatus.TransactionType.Redeem;
+                        break;
+                    case Internal.ESubscriptionTransactionType.FREEE_TRIAL:
+                        status.Type = SubscriptionStatus.TransactionType.FreeTrial;
+                        break;
+                    default:
+                        status.Type = SubscriptionStatus.TransactionType.Unknown;
+                        break;
+                }
             }
-            isViveportClientNeedToUpdate = false;
-            return false;
+
+            return status;
         }
 #endif
     }

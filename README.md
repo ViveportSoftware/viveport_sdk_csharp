@@ -1,6 +1,6 @@
 # HTC VIVEPORT SDK for .NET platform
 
-[![MyGet Badge](https://buildstats.info/myget/viveportsoftware/Viveport)](https://www.myget.org/feed/viveportsoftware/package/nuget/Viveport)
+[![NuGet Badge](https://buildstats.info/nuget/Viveport)](https://www.nuget.org/packages/Viveport/) [![MyGet Badge](https://buildstats.info/myget/viveportsoftware/Viveport)](https://www.myget.org/feed/viveportsoftware/package/nuget/Viveport)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0mh4w2jockcc2fhb/branch/master?svg=true)](https://ci.appveyor.com/project/kenelin/viveport-sdk-csharp/branch/master)
 
