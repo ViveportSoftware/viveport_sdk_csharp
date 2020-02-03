@@ -116,6 +116,9 @@ namespace Viveport
         internal static readonly List<Internal.QueryRuntimeModeCallback> InternalQueryRunTimeCallbacks = new List<Internal.QueryRuntimeModeCallback>();
         internal static readonly List<LicenseChecker> InternalLicenseCheckers = new List<LicenseChecker>();
 
+#if !UNITY_ANDROID
+        private static readonly Internal.GetLicenseCallback sGetLicenseHandler = GetLicenseHandler;
+#endif
         private static readonly string VERSION = "9.99.999.9999";
 
         private static string _appId = "";
@@ -138,11 +141,11 @@ namespace Viveport
             InternalLicenseCheckers.Add(checker);
             if (Environment.Is64BitProcess)
             {
-                Internal.Api.GetLicense_64(GetLicenseHandler, _appId, _appKey);
+                Internal.Api.GetLicense_64(sGetLicenseHandler, _appId, _appKey);
             }
             else
             {
-                Internal.Api.GetLicense(GetLicenseHandler, _appId, _appKey);
+                Internal.Api.GetLicense(sGetLicenseHandler, _appId, _appKey);
             }
 #elif UNITY_ANDROID
             Internal.Api.GetLicense(checker, _appId, _appKey);
